@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tris Game</string>
+    <string name="titolo_app">Tris Game</string>
+    <string name="inizia">Inizia</string>
+    <string name="stato">Stato</string>
+    <string name="in_grid_image">In Grid Image</string>
 </resources>
