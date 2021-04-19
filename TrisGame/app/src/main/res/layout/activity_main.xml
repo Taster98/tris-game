@@ -37,8 +37,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="420dp"
+        android:layout_width="325dp"
+        android:layout_height="334dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -57,33 +57,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="0"
-                tools:ignore="NestedWeights,OnClick"
-                android:contentDescription="@string/in_grid_image" />
+                tools:ignore="NestedWeights,OnClick" />
 
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="1"
-                tools:ignore="OnClick"
-                android:contentDescription="@string/in_grid_image" />
+                tools:ignore="OnClick" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="2"
-                tools:ignore="OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="OnClick" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,33 +97,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="3"
-                tools:ignore="NestedWeights,OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="NestedWeights,OnClick" />
 
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="4"
-                tools:ignore="OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="OnClick" />
 
             <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="5"
-                tools:ignore="OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="OnClick" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,33 +137,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="6"
-                tools:ignore="NestedWeights,OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="NestedWeights,OnClick" />
 
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="7"
-                tools:ignore="OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="OnClick" />
 
             <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:contentDescription="@string/in_grid_image"
                 android:onClick="toccoPlayer"
                 android:padding="20sp"
                 android:tag="8"
-                tools:ignore="OnClick"
-                android:contentDescription="@string/in_grid_image"/>
+                tools:ignore="OnClick" />
         </LinearLayout>
 
     </LinearLayout>

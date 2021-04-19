@@ -5,4 +5,8 @@
     <string name="stato">Stato</string>
     <string name="in_grid_image">In Grid Image</string>
     <string name="gioca">Gioca</string>
+    <string name="cerchioTurno">Turno di O - Tocca per giocare</string>
+    <string name="icsTurno">Turno di X - Tocca per giocare</string>
+    <string name="vinto"> ha vinto!</string>
+    <string name="parita">Pareggio</string>
 </resources>
