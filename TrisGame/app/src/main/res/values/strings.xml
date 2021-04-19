@@ -10,4 +10,7 @@
     <string name="vinto"> ha vinto!</string>
     <string name="parita">Pareggio</string>
     <string name="play_agayn">Gioca di nuovo</string>
+    <string name="single_player">Single player</string>
+    <string name="multiplayer">Multiplayer</string>
+    <string name="online">Online</string>
 </resources>

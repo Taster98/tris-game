@@ -22,7 +22,7 @@ import java.util.Arrays;
 *
 *
 * */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MultiPlayerActivity extends AppCompatActivity implements View.OnClickListener {
     //Mi definisco una variabile che mi serve per capire se il gioco è attivo o no
     public boolean gameActive = true;
     //Mi definisco una variabile per stabilire di chi è il turno (false -> x, true -> cerchio)

@@ -9,19 +9,24 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 
 public class MainMenuActivity extends Activity implements View.OnClickListener {
-    private Button playButton;
-
+    private Button singlePlayer, multiPlayer;
+    private Intent myIntent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
-        playButton = (Button)findViewById(R.id.giocaButton);
-        playButton.setOnClickListener(this);
+        singlePlayer = (Button)findViewById(R.id.singlePlayer);
+        multiPlayer = (Button)findViewById(R.id.multiPlayer);
+        multiPlayer.setOnClickListener(this);
+        singlePlayer.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        Intent myIntent = new Intent(MainMenuActivity.this, MainActivity.class);
+        if(view.getId() == R.id.multiPlayer)
+            myIntent = new Intent(MainMenuActivity.this, MultiPlayerActivity.class);
+        else if(view.getId() == R.id.singlePlayer)
+            myIntent = new Intent(MainMenuActivity.this, SinglePlayerActivity.class);
         this.startActivity(myIntent);
     }
 }
