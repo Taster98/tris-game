@@ -9,4 +9,5 @@
     <string name="icsTurno">Turno di X - Tocca per giocare</string>
     <string name="vinto"> ha vinto!</string>
     <string name="parita">Pareggio</string>
+    <string name="play_agayn">Gioca di nuovo</string>
 </resources>

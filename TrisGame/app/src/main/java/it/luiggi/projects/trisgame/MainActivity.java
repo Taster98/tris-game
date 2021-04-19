@@ -2,8 +2,10 @@ package it.luiggi.projects.trisgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +22,7 @@ import java.util.Arrays;
 *
 *
 * */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //Mi definisco una variabile che mi serve per capire se il gioco è attivo o no
     public boolean gameActive = true;
     //Mi definisco una variabile per stabilire di chi è il turno (false -> x, true -> cerchio)
@@ -39,8 +41,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
     }
-
+    //Metodo che inizializza le viste
+    private void initViews(){
+        Button button = (Button)findViewById(R.id.replay);
+        button.setOnClickListener(this);
+    }
     //Definisco un metodo per la gestione di un "tocco" sulla cella
     public void toccoPlayer(View view){
         //Costruisco un puntatore alla cella toccata
@@ -50,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Controllo se non sono arrivato alla fine del gioco chiamando la funzione resetGame()
         if(!gameActive)
-            resetGame(view);
+            resetGame();
 
         //Controllo lo stato dell'immagine toccata: va riempita solo se è vuota
         if(gameState[toccata] == -1){
@@ -58,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             cont++;
 
             //Se il cont è a 9, il gioco è finito e resetto
-            if(cont == 9)
+            if(cont >= 9)
                 gameActive = false;
 
             //Marchio la posizione toccata (se falso allora metto 0 altrimenti 1)
@@ -96,26 +103,38 @@ public class MainActivity extends AppCompatActivity {
 
                     // Dobbiamo resettare il gioco
                     gameActive = false;
+                    TextView stato = (TextView)findViewById(R.id.status);
                     if (gameState[winPosition[0]] == 0) {
+                        stato.setTextColor(Color.parseColor("yellow"));
                         winnerStr = "X " + getText(R.string.vinto).toString();
                     } else {
+                        stato.setTextColor(getColor(R.color.green));
                         winnerStr = "O " + getText(R.string.vinto).toString();
                     }
                     // A questo punto aggiorniamo il testo per annunciare la vittoria del giocatore fortunato
-                    TextView stato = (TextView)findViewById(R.id.status);
+
                     stato.setText(winnerStr);
+                    //Mostro il bottone
+                    Button button = (Button) findViewById(R.id.replay);
+                    button.setBackgroundColor(Color.parseColor("darkgray"));
+                    button.setTextColor(Color.parseColor("white"));
+                    button.setVisibility(View.VISIBLE);
                 }
             }
             //In questo caso ci si arriva solo se si è in parità
-            if (cont == 9 && !flag) {
+            if (cont >= 9 && !flag) {
                 TextView stato = (TextView)findViewById(R.id.status);
                 stato.setText(getText(R.string.parita).toString());
+                stato.setTextColor(Color.parseColor("darkgray"));
+                //Mostro il bottone
+                Button button = (Button) findViewById(R.id.replay);
+                button.setVisibility(View.VISIBLE);
             }
         }
     }
 
     // Metodo per resettare il gioco
-    public void resetGame(View view) {
+    public void resetGame() {
         gameActive = true;
         activePlayer = false;
         Arrays.fill(gameState, -1);
@@ -132,5 +151,15 @@ public class MainActivity extends AppCompatActivity {
 
         TextView stato = findViewById(R.id.status);
         stato.setText(R.string.icsTurno);
+        stato.setTextColor(Color.parseColor("darkgray"));
+        //Nascondo il bottone
+        Button button = (Button) findViewById(R.id.replay);
+        button.setVisibility(View.INVISIBLE);
+        cont=0;
+    }
+
+    @Override
+    public void onClick(View view) {
+        resetGame();
     }
 }
