@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrisGame">
         <activity android:name=".MainMenuActivity">
@@ -19,9 +19,6 @@
         <activity android:name=".MultiPlayerActivity">
         </activity>
         <activity android:name=".SinglePlayerActivity">
-
-        </activity>
-        <activity android:name=".OnlineActivity">
 
         </activity>
     </application>
