@@ -88,7 +88,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
                 if(checkWin()){
                     gameActive = false;
                 }
-                //TODO: DEVO CHIAMARE L'ALGORITMO DEL PC
+                //L'algoritmo lo chiamo solo se la partita non è già finita ovviamente.
                 if(cont < 9 && gameActive)
                     superRobot();
             }
@@ -153,10 +153,21 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    //Metodo MIN-MAX (Artificial Intelligence)
+    //Metodo che contiene l'algoritmo intelligente
     private void superRobot(){
-        int[] moves = minimax(2,false);
-        int moveToDo = moves[1]*3 + moves[2];
+        int bestMove = -1;
+        int bestVal = Integer.MIN_VALUE;
+        int toMove;
+        for (int j : gameState) {
+            if (j != -1) {
+                toMove = minimax(2, false)[1];
+                if (toMove > bestVal) {
+                    bestMove = toMove;
+                    bestVal = toMove;
+                }
+            }
+        }
+        int moveToDo = bestMove;
         cont++;
         //Controllo se non sono arrivato alla fine del gioco chiamando la funzione resetGame()
         if (!gameActive)
@@ -184,58 +195,50 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
 
     private int[] minimax(int depth, boolean player) {
         // Genero le mosse possibili in liste di array ({riga, colonna}).
-        List<int[]> nextMoves = generateMoves();
+        List<Integer> nextMoves = generateMoves();
 
         // falso è il computer, che quindi vuole massimizzare mentre vero è il giocatore
         // che vuole minimizzare
         int bestScore = !player ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         int currentScore;
         int bestRow = -1;
-        int bestCol = -1;
 
         if (nextMoves.isEmpty() || depth == 0) {
             // O la partita è finita o sono arrivato in fondo alla previsione
             bestScore = evaluate();
         } else {
-            for (int[] move : nextMoves) {
+            for (int move : nextMoves) {
                 // Simuliamo la mossa per vedere se è massimizzata (o minimizzata)
-                gameState[3*move[0]+move[1]] = 0;
+                gameState[move] = 0;
                 if (!player) {  // Computer -> massimizzare
                     currentScore = minimax(depth - 1, true)[0];
                     if (currentScore > bestScore) {
                         bestScore = currentScore;
-                        bestRow = move[0];
-                        bestCol = move[1];
+                        bestRow = move;
                     }
-                } else {  // Giocatore -> minimizzare
+                }else {  // Giocatore -> minimizzare
                     currentScore = minimax(depth - 1, false)[0];
                     if (currentScore < bestScore) {
                         bestScore = currentScore;
-                        bestRow = move[0];
-                        bestCol = move[1];
+                        bestRow = move;
                     }
                 }
                 // Faccio "ctrl-z" della mossa
-                gameState[3*move[0]+move[1]] = -1;
+                gameState[move] = -1;
             }
         }
-        return new int[] {bestScore, bestRow, bestCol};
+        return new int[] {bestScore, bestRow};
     }
-    private List<int[]> generateMoves() {
-        List<int[]> nextMoves = new ArrayList<>();
-
+    private List<Integer> generateMoves() {
+        List<Integer> nextMoves = new ArrayList<>();
         // Se la partita è finita non serve fare previsioni, ritorno null
         if (hasWon(false) || hasWon(true)) {
             return nextMoves;
         }
-
-        // Cerco le celle vuote (con -1) da poter riempire con una mossa
-        for (int row = 0; row < 3; ++row) {
-            for (int col = 0; col < 3; ++col) {
-                if (gameState[3*row+col] == -1) {
-                    nextMoves.add(new int[] {row, col});
-                }
-            }
+        //Aggiungo tutte le mosse possibili che l'AI può fare e lo ritorno
+        for(int i=0;i<gameState.length;i++){
+            if(gameState[i] == -1)
+                nextMoves.add(i);
         }
         return nextMoves;
     }
@@ -256,66 +259,71 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
     private int evaluate() {
         int score = 0;
         // Valuto ognuna delle 8 combinazioni vincenti (3 righe, 3 colonne, 2 diagonali)
-        score += evaluateLine(0, 0, 0, 1, 0, 2);  // riga 0
-        score += evaluateLine(1, 0, 1, 1, 1, 2);  // riga 1
-        score += evaluateLine(2, 0, 2, 1, 2, 2);  // riga 2
-        score += evaluateLine(0, 0, 1, 0, 2, 0);  // colonna 0
-        score += evaluateLine(0, 1, 1, 1, 2, 1);  // colonna 1
-        score += evaluateLine(0, 2, 1, 2, 2, 2);  // colonna 2
-        score += evaluateLine(0, 0, 1, 1, 2, 2);  // diagonale
-        score += evaluateLine(0, 2, 1, 1, 2, 0);  // diagonale inversa
+        score += evaluateLine(0, 1, 2);  // riga 0
+        score += evaluateLine(3, 4, 5);  // riga 1
+        score += evaluateLine(6, 7, 8);  // riga 2
+        score += evaluateLine(0, 3, 6);  // colonna 0
+        score += evaluateLine(1, 4, 7);  // colonna 1
+        score += evaluateLine(2, 5, 8);  // colonna 2
+        score += evaluateLine(0, 4, 8);  // diagonale
+        score += evaluateLine(2, 4, 6);  // diagonale inversa
         return score;
     }
 
-    /** Qui il cuore dell'euristica: ritorna
-     * +100, +10, +1 per 3-, 2-, 1- su una linea per il computer.
-     -100, -10, -1 per 3-, 2-, 1 su una linea per l'avversario.
-     0 altrimenti */
+    /**
+     * Questo è il cuore dell'euristica: devo massimizzare o minimizzare il punteggio.
+     * Do a questo algoritmo le 3 posizioni e controllo chi è vincente: il pc deve MASSIMIZZARE
+     * mentre il giocatore deve MINIMIZZARE.
+     * Se la prima posizione è occupata dal pc ritorno +1, altrimenti se è occupata dal giocatore
+     * ritorno -1, infine se è vuota ritorno ovviamente 0.
+     * Per la seconda posizione controllo una cosa simile: se è occupata dal pc controllo anche la prima:
+     * se anch'essa è occupata dal pc ritorno 10, altrimenti se è occupata dal giocatore torno 0. Altrimenti
+     * metto score a 1.
+     * Per la terza "tripla" faccio lo stesso ragionamento: se è occupata dal pc, controllo anche la 2 e la 1
+     * e il ragionamento è iterativo in questo modo. Uso i punteggi +-1, +-10, +-100.
+     */
     //Convertire una matrice in array monodimensionale: 3*row + col
-    private int evaluateLine(int row1, int col1, int row2, int col2, int row3, int col3) {
+    private int evaluateLine(int cella1, int cella2,int cella3) {
         int score = 0;
+
         // Prima cella
-        if (gameState[row1*3 +col1] == 0) {
+        if (gameState[cella1] == 0)
             score = 1;
-        } else if (gameState[row1*3 +col1] == 1) {
+        else if (gameState[cella1] == 1)
             score = -1;
-        }
+
         // Seconda cella
-        if (gameState[row2*3+col2] == 0) {
-            if (score == 1) {
+        if (gameState[cella2] == 0) {
+            if (score == 1)
                 score = 10;
-            } else if (score == -1) {
+            else if (score == -1)
                 return 0;
-            } else {
+            else
                 score = 1;
-            }
-        } else if (gameState[3*row2+col2] == 1) {
-            if (score == -1) {
+        }else if (gameState[cella2] == 1) {
+            if (score == -1)
                 score = -10;
-            } else if (score == 1) {
+            else if (score == 1)
                 return 0;
-            } else {
+            else
                 score = -1;
-            }
         }
 
         // Terza cella
-        if (gameState[3*row3+col3] == 0) {
-            if (score > 0) {
+        if (gameState[cella3] == 0) {
+            if (score > 0)
                 score *= 10;
-            } else if (score < 0) {
+            else if (score < 0)
                 return 0;
-            } else {
+            else
                 score = 1;
-            }
-        } else if (gameState[3*row3+col3] == 1) {
-            if (score < 0) {
+        }else if (gameState[cella3] == 1) {
+            if (score < 0)
                 score *= 10;
-            } else if (score > 1) {
+            else if (score > 0)
                 return 0;
-            } else {
+            else
                 score = -1;
-            }
         }
         return score;
     }
