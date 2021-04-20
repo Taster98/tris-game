@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,11 +10,11 @@
     <!--Titolo dell'app-->
     <TextView
         android:id="@+id/textView"
-        android:textColor="@color/darkGray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="23dp"
         android:text="@string/titolo_app"
+        android:textColor="@color/darkGray"
         android:textSize="45sp"
         android:textStyle="bold"
         app:fontFamily="monospace"
@@ -23,19 +22,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <Button
-        android:id="@+id/giocaButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/singlePlayer"
+        android:layout_width="350dp"
+        android:layout_height="76dp"
         android:fontFamily="monospace"
-        android:text="@string/gioca"
-        android:textSize="50sp"
+        android:text="@string/single_player"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.425" />
+        app:layout_constraintVertical_bias="0.279" />
+
+    <Button
+        android:id="@+id/multiPlayer"
+        android:layout_width="350dp"
+        android:layout_height="76dp"
+        android:fontFamily="monospace"
+        android:text="@string/multiplayer"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.506" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

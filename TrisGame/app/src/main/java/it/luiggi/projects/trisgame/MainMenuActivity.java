@@ -21,7 +21,7 @@ public class MainMenuActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Intent myIntent = new Intent(MainMenuActivity.this, MainActivity.class);
+        Intent myIntent = new Intent(MainMenuActivity.this, MultiPlayerActivity.class);
         this.startActivity(myIntent);
     }
 }
