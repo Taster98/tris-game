@@ -29,6 +29,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
     //Mi definisco una variabile che mi serve per capire se il gioco è attivo o no
     public boolean gameActive = true;
     //Mi definisco una variabile per stabilire di chi è il turno (false -> x, true -> cerchio)
+    //FALSO -> inizia prima il pc
     public boolean activePlayer = true;
     //Mi definisco un array che indica lo stato del gioco, ossia le posizioni attualmente da chi sono coperte
     /*
@@ -50,6 +51,8 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
     private void initViews(){
         Button button = (Button)findViewById(R.id.replay);
         button.setOnClickListener(this);
+        //Inizia prima il pc
+        //superRobot();
     }
     //Definisco un metodo per la gestione di un "tocco" sulla cella
     public void toccoPlayer(View view){
@@ -168,6 +171,10 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
             }
         }
         int moveToDo = bestMove;
+        //Significa che inizia per primo il pc
+        if(moveToDo == -1){
+            moveToDo = ThreadLocalRandom.current().nextInt(0, 9);
+        }
         cont++;
         //Controllo se non sono arrivato alla fine del gioco chiamando la funzione resetGame()
         if (!gameActive)
@@ -202,8 +209,8 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
         int bestScore = !player ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         int currentScore;
         int bestRow = -1;
-
-        if (nextMoves.isEmpty() || depth == 0) {
+        //La chiave della vittoria è la profondità!
+        if (nextMoves.isEmpty() || depth == 1) {
             // O la partita è finita o sono arrivato in fondo alla previsione
             bestScore = evaluate();
         } else {
@@ -358,6 +365,8 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
                 button.setBackgroundColor(Color.parseColor("darkgray"));
                 button.setTextColor(Color.parseColor("white"));
                 button.setVisibility(View.VISIBLE);
+                //Non ha senso continuare a iterare, qualcuno ha vinto
+                break;
             }
         }
         //In questo caso ci si arriva solo se si è in parità
@@ -368,15 +377,14 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
             //Mostro il bottone
             Button button = (Button) findViewById(R.id.replay);
             button.setVisibility(View.VISIBLE);
-            return true;
-        }else{
-            return false;
         }
+        return flag;
     }
 
     // Metodo per resettare il gioco
     public void resetGame() {
         gameActive = true;
+        //true -> iniziamo noi, false -> il computer
         activePlayer = true;
         Arrays.fill(gameState, -1);
         // Se resetto il gioco rimuovo tutte le immagini dalla griglia
@@ -397,6 +405,8 @@ public class SinglePlayerActivity extends AppCompatActivity implements View.OnCl
         Button button = (Button) findViewById(R.id.replay);
         button.setVisibility(View.INVISIBLE);
         cont=0;
+        //Inizia prima il pc
+        //superRobot();
     }
 
     @Override

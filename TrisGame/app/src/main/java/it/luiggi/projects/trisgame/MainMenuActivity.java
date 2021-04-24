@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.Nullable;
-
 public class MainMenuActivity extends Activity implements View.OnClickListener {
     private Button singlePlayer, multiPlayer;
     private Intent myIntent;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         singlePlayer = (Button)findViewById(R.id.singlePlayer);
